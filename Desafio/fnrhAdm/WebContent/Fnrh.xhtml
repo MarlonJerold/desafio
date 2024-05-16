@@ -1,0 +1,326 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" 
+	xmlns:a="http://richfaces.org/a4j" template="layout/template_site.xhtml">
+	
+	<ui:define name="title">#{messages.cabecalhoFNRH}</ui:define>     
+	<ui:define name="body" >
+	
+	<h:form >
+	<a:queue requestDelay="1000" ignoreDupResponse="true"/>
+	<a:loadScript src="/scripts/jquery.maskedinput-1.2.2.js" />			
+	<a:loadScript src="/scripts/jquery.alphanumeric.js" />
+	<a:loadScript src="/scripts/jquery.price_format.1.3.js" />
+	
+	<rich:jQuery  selector=".num" timing="onload" query="numeric();" />
+	
+	
+	<rich:jQuery id="mskFone" selector=".fone"
+				query="mask('9999-9999',{placeholder:' '})" timing="onload" />
+	<rich:jQuery id="mskDDI" selector=".ddi"
+				query="mask('(999)',{placeholder:' '})" timing="onload" />
+	<rich:jQuery id="mskDDD" selector=".ddd"
+				query="mask('(99)',{placeholder:' '})" timing="onload" />				
+	<rich:jQuery id="mskCep" selector=".cep" timing="onload" query="mask('99999-999',{placeholder:' '})" />
+				
+	<div class="content_box">
+		<p id="txt-title" class="form-text-title">
+			<h:outputText value="#{messages['fnrh.bemvindo']}" />
+		</p>
+	</div>
+	
+	<div class="content_box">
+		<p class="form-text-intro"><h:outputText value="#{messages['fnrh.intro']}" /></p>
+	</div>
+	
+	<!-- Dados da Reserva e Lista de Fnrhs -->	
+	<div class="content_box">
+		<p class="form-text-title-med"><h:outputText value="#{messages['dados.reserva']}" /></p>
+	</div>
+
+			<h:panelGrid columns="2">
+			<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+				<ui:define name="label"><h:outputText value="#{messages.hotel}" />
+				<h:outputText value="#{fnrhCtrl.reserva.hotel.descricao}" /></ui:define>							
+			</s:decorate>	
+	
+			<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+				<ui:define name="label"><h:outputText value="#{messages['numero.reserva']}" />:
+				<h:outputText value="#{fnrhCtrl.reserva.numReservaErp}" /></ui:define>	
+								
+			</s:decorate>
+		
+			
+			<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+				<ui:define name="label"><h:outputText value="#{messages.hospede}" /></ui:define>
+				<h:selectOneRadio id="fnrhObj"  value="#{fnrhCtrl.fnrh}" styleClass="contact_div_txtlabel" disabled="true" >
+				<s:selectItems var="fnrhVar" value="#{fnrhCtrl.fnrhs}" label="#{fnrhVar.nome} #{fnrhVar.sobrenome}" itemValue="${fnrhCtrl.fnrhSelecionada}" />	
+					 
+				</h:selectOneRadio>
+			</s:decorate>
+		</h:panelGrid>		
+	
+	<div id="dadosFnrh" >
+	<h:panelGrid columns="2">
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['primeiro.nome']}" /></ui:define>
+			<h:inputText id="primeiroNome" name="primeiroNome" value="#{fnrhCtrl.fnrh.nome}" maxlength="60" />					
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['ultimo.nome']}" /></ui:define>	
+			<h:inputText id="ultimoNome" name="ultimoNome" value="#{fnrhCtrl.fnrh.sobrenome}"  maxlength="60" />
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['data.nascimento']}" /></ui:define>		
+			<rich:jQuery id="mskData1" selector=".txtDataInicial" timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+			<rich:calendar id="dataNascimento"
+				value="#{fnrhCtrl.fnrh.dataNascimento}"
+				popup="#{true}" datePattern="dd/MM/yyyy" showWeeksBar="false"
+				firstWeekDay="0" enableManualInput="true"
+				inputClass="rich-textarea txtDataInicial" styleClass="contact_txtfield_med">
+				<s:convertDateTime pattern="dd/MM/yyyy" />
+			</rich:calendar>	
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.email}" /></ui:define>
+			<h:inputText id="email" name="email" value="#{fnrhCtrl.fnrh.email}" maxlength="250" />
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.telefone}" /></ui:define>
+			<h:inputText id="telefoneDDI" name="telefoneDDI" value="#{fnrhCtrl.fnrh.telefoneDDI}" size="5" maxlength="5" styleClass="ddi"/>
+			<h:inputText id="telefoneDDD" name="telefoneDDD" value="#{fnrhCtrl.fnrh.telefoneDDD}" size="4" maxlength="4" styleClass="ddd"/>
+			<h:inputText id="telefoneNumero" name="telefoneNumero" value="#{fnrhCtrl.fnrh.telefoneNumero}"  maxlength="10" styleClass="num"/>
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.celular}" /></ui:define>	
+			<h:inputText id="celularDDI" name="celularDDI" value="#{fnrhCtrl.fnrh.celularDDI}" size="3" maxlength="3" styleClass="ddi"/>		
+			<h:inputText id="celularDDD" name="celularDDD" value="#{fnrhCtrl.fnrh.celularDDD}" size="3" maxlength="2" styleClass="ddd"/>
+			<h:inputText id="celularNumero" name="celularNumero" value="#{fnrhCtrl.fnrh.celularNumero}"  maxlength="10" styleClass="num"/>
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.profissao}" /></ui:define>
+			<h:inputText id="profissao" name="profissao" value="#{fnrhCtrl.fnrh.profissao}"  maxlength="100"/>
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.genero}" /></ui:define>
+			<h:selectOneMenu id="generoList" value="#{fnrhCtrl.fnrh.genero}"  >
+				<s:selectItems var="genero" value="#{fnrhCtrl.generos}" label="#{genero.descricao}" noSelectionLabel="#{messages.selectMessage}"/>
+				<s:convertEntity /><s:convertEntity />	
+			</h:selectOneMenu>		
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.nacionalidade}" /></ui:define>
+			<h:selectOneMenu id="nacionalidadeList" value="#{fnrhCtrl.fnrh.paisNacionalidade}" style="width: 150px;">
+			<f:selectItem itemValue="" itemLabel="#{messages.selectMessage}" />
+			<s:selectItems var="nacionalidade" value="#{fnrhCtrl.paisesNacionalidade}" label="#{nacionalidade.nomePortugues}" itemValue="#{nacionalidade.sigla}" noSelectionLabel="#{messages.selectMessage}"/>			
+			</h:selectOneMenu>
+		</s:decorate>
+
+	</h:panelGrid>
+	
+
+
+	<!-- Dados Residência -->	
+	<div class="content_box">
+		<p class="form-text-title-med"><h:outputText value="#{messages.residencia}" /></p>
+	</div>
+	
+
+	<h:panelGrid columns="2">
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.cep}" /></ui:define>
+			<h:inputText id="cep" name="cep" value="#{fnrhCtrl.fnrh.cepResidencia}"   maxlength="9" styleClass="cep"  >
+			<a:support event="onblur" reRender="paisResidenciaList,estadosResidenciaList,cidadesResidenciaList,cidadeResidencia,logradouroResidencia,
+			complementoResidencia,paisOrigemList,estadosOrigemList,cidadesOrigemList,cidadeOrigem,paisDestinoList,estadosDestinoList,cidadesDestinoList,cidadeDestino" 
+			ajaxSingle="true" action="#{fnrhCtrl.setaDadosCep}"  />
+			</h:inputText>
+		</s:decorate>
+	
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.pais}" /></ui:define>
+			<h:selectOneMenu id="paisResidenciaList" value="#{fnrhCtrl.fnrh.paisResidencia}" style="width: 150px;">
+			<s:selectItems var="paisResidencia" value="#{fnrhCtrl.paisesResidencia}" label="#{paisResidencia.nomePortugues}" itemValue="#{paisResidencia.sigla}" 
+							noSelectionLabel="#{messages.selectMessage}"/>				
+			<a:support event="onchange" reRender="estadosResidenciaList,estadoResidencia,cidadesResidenciaList,cidadeResidencia" ajaxSingle="true" action="#{fnrhCtrl.setaEstadosResidencia}" />		
+			</h:selectOneMenu>		
+		</s:decorate>	
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.uf}" /></ui:define>
+			<h:selectOneMenu id="estadosResidenciaList" name="estadosResidenciaList" value="#{fnrhCtrl.fnrh.estadoResidencia}" >
+			<s:selectItems var="estadoResidenciaObj" value="#{fnrhCtrl.estadosResidencia}" label="#{estadoResidenciaObj.descricao}" itemValue="#{estadoResidenciaObj.sigla}" 
+							noSelectionLabel="#{messages.selectMessage}"/>
+			<a:support event="onchange" reRender="cidadesResidenciaList" ajaxSingle="true" action="#{fnrhCtrl.setaCidadesResidencia}" />							
+			</h:selectOneMenu>
+			<h:inputText id="estadoResidencia" value="#{fnrhCtrl.fnrh.estadoDescricaoResidencia}"  />
+		</s:decorate>	
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.cidade}" /></ui:define>
+			<h:selectOneMenu id="cidadesResidenciaList" value="#{fnrhCtrl.fnrh.cidadeCodResidencia}"  >
+			<s:selectItems var="cidadeResidencia" value="#{fnrhCtrl.cidadesResidencia}" label="#{cidadeResidencia.descricao}" itemValue="#{cidadeResidencia.codigoIBGE}" 
+							noSelectionLabel="#{messages.selectMessage}"/>			
+			</h:selectOneMenu>
+			<h:inputText id="cidadeResidencia" value="#{fnrhCtrl.fnrh.cidadeDescricaoResidencia}" />
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['residencia.logradouro']}" /></ui:define>
+			<h:inputText id="logradouroResidencia" name="logradouroResidencia" value="#{fnrhCtrl.fnrh.logradouroResidencia}" />			
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['residencia.numero']}" /></ui:define>
+			<h:inputText id="numeroResidencia" name="numeroResidencia" value="#{fnrhCtrl.fnrh.numeroResidencia}" />			
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['residencia.complemento']}" /></ui:define>
+			<h:inputText id="complementoResidencia"  name="complementoResidencia" value="#{fnrhCtrl.fnrh.complementoResidencia}" />			
+		</s:decorate>
+
+	</h:panelGrid>
+	
+	<!-- Dados Origem -->	
+	<div class="content_box">
+		<p class="form-text-title-med"><h:outputText value="#{messages['ultima.procedencia']}" /></p>
+	</div>
+
+	<h:panelGrid columns="2">
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.pais}" /></ui:define>
+			<h:selectOneMenu id="paisOrigemList" value="#{fnrhCtrl.fnrh.paisOrigem}" style="width: 150px;">
+			<s:selectItems var="paisOrigem" value="#{fnrhCtrl.paisesOrigem}" label="#{paisOrigem.nomePortugues}" itemValue="#{paisOrigem.sigla}" 
+							noSelectionLabel="#{messages.selectMessage}"/>					
+			<a:support event="onchange" reRender="estadosOrigemList,estadoOrigem" ajaxSingle="true" action="#{fnrhCtrl.setaEstadosOrigem}" />		
+			</h:selectOneMenu>		
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.uf}" /></ui:define>
+			<h:selectOneMenu id="estadosOrigemList" name="estadosOrigemList" value="#{fnrhCtrl.fnrh.estadoOrigem}" >
+			<s:selectItems var="estadoOrigem" value="#{fnrhCtrl.estadosOrigem}" label="#{estadoOrigem.descricao}" itemValue="#{estadoOrigem.sigla}" 
+							noSelectionLabel="#{messages.selectMessage}"/>
+			<a:support event="onchange" reRender="cidadesOrigemList" ajaxSingle="true" action="#{fnrhCtrl.setaCidadesOrigem}" />		
+			</h:selectOneMenu>
+			<h:inputText id="estadoOrigem" value="#{fnrhCtrl.fnrh.estadoDescricaoOrigem}"   />
+		</s:decorate>
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.cidade}" /></ui:define>
+			<h:selectOneMenu id="cidadesOrigemList" value="#{fnrhCtrl.fnrh.cidadeCodOrigem}"  >
+			<s:selectItems var="cidadeOrigem" value="#{fnrhCtrl.cidadesOrigem}" label="#{cidadeOrigem.descricao}" itemValue="#{cidadeOrigem.codigoIBGE}" 
+							noSelectionLabel="#{messages.selectMessage}"/>				
+			</h:selectOneMenu>
+			<h:inputText id="cidadeOrigem" value="#{fnrhCtrl.fnrh.cidadeDescricaoOrigem}"   />
+		</s:decorate>
+	
+	</h:panelGrid>
+
+	<!-- Dados Destino -->
+	<div class="content_box">
+		<p class="form-text-title-med"><h:outputText value="#{messages['proximo.destino']}" /></p>
+	</div>
+
+	<h:panelGrid columns="2">
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.pais}" /></ui:define>
+			<h:selectOneMenu id="paisDestinoList" value="#{fnrhCtrl.fnrh.paisDestino}" style="width: 150px;">
+			<s:selectItems var="paisDestino" value="#{fnrhCtrl.paisesDestino}" label="#{paisDestino.nomePortugues}" itemValue="#{paisDestino.sigla}" 
+							noSelectionLabel="#{messages.selectMessage}"/>
+					
+			<a:support event="onchange" reRender="estadosDestinoList,estadoDestino" ajaxSingle="true" action="#{fnrhCtrl.setaEstadosDestino}" />		
+			</h:selectOneMenu>		
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.uf}" /></ui:define>
+			<h:selectOneMenu id="estadosDestinoList" name="estadosDestinoList" value="#{fnrhCtrl.fnrh.estadoDestino}"  >
+			<s:selectItems var="estadoDestino" value="#{fnrhCtrl.estadosDestino}" label="#{estadoDestino.descricao}" itemValue="#{estadoDestino.sigla}" 
+							noSelectionLabel="#{messages.selectMessage}"/>
+			<a:support event="onchange" reRender="cidadesDestinoList" ajaxSingle="true" action="#{fnrhCtrl.setaCidadesDestino}" />
+			</h:selectOneMenu>
+			<h:inputText id="estadoDestino" value="#{fnrhCtrl.fnrh.estadoDescricaoDestino}"  />
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.cidade}" /></ui:define>
+			<h:selectOneMenu id="cidadesDestinoList" value="#{fnrhCtrl.fnrh.cidadeCodDestino}"  >
+			<s:selectItems var="cidadeDestino" value="#{fnrhCtrl.cidadesDestino}" label="#{cidadeDestino.descricao}" itemValue="#{cidadeDestino.codigoIBGE}" 
+							noSelectionLabel="#{messages.selectMessage}"/>		
+			</h:selectOneMenu>
+			<h:inputText id="cidadeDestino" value="#{fnrhCtrl.fnrh.cidadeDescricaoDestino}"  />
+		</s:decorate>
+
+	</h:panelGrid>
+
+	<div class="content_box">
+	</div>
+
+	<h:panelGrid columns="1">
+
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.meio}" /></ui:define>
+			<h:selectOneRadio id="meio"  value="#{fnrhCtrl.fnrh.meioTransporte}" styleClass="contact_div_txtlabel">
+			<s:selectItems var="meio" value="#{fnrhCtrl.meiosTransporte}" label="#{meio.descricao}" />
+			<s:convertEntity />			 
+			</h:selectOneRadio>
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages.motivo}" /></ui:define>
+			<h:selectOneRadio id="motivo"  value="#{fnrhCtrl.fnrh.motivoViagem}" styleClass="contact_div_txtlabel">
+			<s:selectItems var="motivo" value="#{fnrhCtrl.motivosViagem}" label="#{motivo.descricao}" />
+			<s:convertEntity />			 
+			</h:selectOneRadio>
+		</s:decorate>
+	
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['documento.tipo']}" /></ui:define>
+			<h:selectOneMenu id="tipoDocumentoList" value="#{fnrhCtrl.fnrh.tipoDocumento}" >
+			<s:selectItems var="tipo" value="#{fnrhCtrl.tiposDocumento}" label="#{tipo.descricao}" noSelectionLabel="#{messages.selectMessage}"/>
+			<s:convertEntity />		
+			</h:selectOneMenu>
+		</s:decorate>	
+	
+		<rich:jQuery id="mskNumDocumento" selector=".numDocumento" timing="onload" query="mask('#{fnrhCtrh.fnrh.tipoDocumento.mascara}',{placeholder:' '})"  />
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['documento.numero']}" /></ui:define>
+			<h:inputText name="documentoNumero" id="documentoNumero" value="#{fnrhCtrl.fnrh.documentoNumero}" maxlength="30" styleClass="numDocumento" />				
+		</s:decorate>
+		
+		<s:decorate template="layout/editFnrh.xhtml" styleClass="contact_div_label_field">
+			<ui:define name="label"><h:outputText value="#{messages['documento.orgao']}" /></ui:define>
+			<h:inputText name="documentoOrgao" id="documentoOrgao" value="#{fnrhCtrl.fnrh.documentoOrgao}" maxlength="20" />				
+		</s:decorate>
+	
+		<div>
+			
+			<h:commandButton id="botaoSalvarProximo" value="#{messages.actionSaveNext}" action="#{fnrhCtrl.save}" rendered="#{fnrhCtrl.haFnrhsNaoPreenchidas}"/>				
+	   </div>
+	  
+	</h:panelGrid>
+	</div>
+	
+			
+	</h:form>
+
+	</ui:define>
+	
+</ui:composition>

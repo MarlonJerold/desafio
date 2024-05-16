@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
+	
+	<ui:define name="title">
+		<h:outputText value="#{messages.menuGeraBilhete}"/>
+	</ui:define>
+	<ui:define name="body">
+		<h:form id="geraBilheteForm" style="edit">
+		<a:loadScript src="/scripts/jquery.maskedinput-1.2.2.js" />			
+		<a:loadScript src="/scripts/jquery.alphanumeric.js" />
+		<rich:jQuery  selector="#proximoSequencial" timing="onload"  query="numeric();" />
+		<rich:jQuery  selector="#quantidadeImpressao" timing="onload"  query="numeric();" />
+		<rich:panel >
+		<h:panelGrid columns="2">
+			<s:decorate template="layout/edit.xhtml">
+				<ui:define name="label">#{messages.tipoLote}</ui:define>
+				<h:selectOneMenu value="#{geraBilheteCtrl.lote.tipoLote}" disabled="true">
+						<s:selectItems var="tipoLote" value="#{geraBilheteCtrl.tipoLoteList}" label="#{tipoLote.descricao}" noSelectionLabel="#{messages.selectAll}"/>
+						<s:convertEntity />							
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="layout/edit.xhtml">
+				<ui:define name="label">#{messages.lote}</ui:define>
+				<h:selectOneMenu value="#{geraBilheteCtrl.lote}" disabled="true">
+						<s:selectItems var="lote" value="#{geraBilheteCtrl.loteGeralList}" label="#{lote.descricao}" noSelectionLabel="#{messages.selectAll}"/>
+						<s:convertEntity />							
+				</h:selectOneMenu>
+			</s:decorate>
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<s:decorate template="layout/edit.xhtml">
+				<ui:define name="label">#{messages.codigo}</ui:define>
+				<h:inputText value="#{geraBilheteCtrl.lote.quantidade}" readonly="true" />				
+			</s:decorate>
+			<s:decorate template="layout/edit.xhtml">
+				<ui:define name="label">#{messages.dataValidade}</ui:define>
+				<h:inputText value="#{geraBilheteCtrl.lote.dataValidade}" readonly="true" />				
+			</s:decorate>
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<s:decorate template="layout/edit.xhtml" >
+				<ui:define name="label">#{messages.descricaoImpressao}</ui:define>
+				<h:inputTextarea name="descricaoImpressao"  value="#{geraBilheteCtrl.lote.descricaoImpressao}" cols="70" rows="10"  maxlength="10" readonly="true"/> 
+			</s:decorate>
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<s:decorate template="layout/edit.xhtml" >
+			<ui:define name="label">#{messages.proximoSequencial}</ui:define>
+				<h:inputText id="proximoSequencial" value="#{geraBilheteCtrl.proximoSequencial}" readonly="#{geraBilheteCtrl.lote.statusIntegracao!=null}" maxlength="10" size="10" required="true"/>		
+			</s:decorate>
+			<s:decorate template="layout/edit.xhtml" >
+			<ui:define name="label">#{messages.quantidadeImpressao}</ui:define>
+				<h:inputText id="quantidadeImpressao" value="#{geraBilheteCtrl.quantidadeImpressao}" readonly="#{geraBilheteCtrl.lote.statusIntegracao!=null}" maxlength="10" size="10" required="true"/>		
+			</s:decorate>
+			 
+		</h:panelGrid>
+		</rich:panel>
+		<div class="actionButtons">
+			<h:commandButton value="#{messages.actionImprimirBilhetes}" action="#{geraBilheteCtrl.imprimir}" rendered="#{geraBilheteCtrl.lote.statusIntegracao==null}"/>
+			<h:commandButton value="#{messages.actionGerarBilhetes}" action="#{geraBilheteCtrl.gerar}" rendered="#{geraBilheteCtrl.lote.statusIntegracao!=null}"/>
+			<s:button value="#{messages.actionBack}" action="#{geraBilheteCtrl.backList}" imediate="true"/>
+		</div>
+							
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

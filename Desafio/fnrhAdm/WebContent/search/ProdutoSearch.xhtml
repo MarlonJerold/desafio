@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j">
+
+	<h:inputHidden id="produtoId" value="#{produtoSearch.id}" required="#{required}"/>
+	<h:panelGrid columns="3">
+		<h:inputText id="produtoNome" size="50" autocomplete="off" value="#{produtoSearch.nome}" disabled="#{disabled}" />
+	
+		<h:graphicImage value="/img/icons/find.png" onclick="#{rich:component('produtoSuggestion')}.callSuggestion(true)" disabled="#{disabled}" />
+		<h:graphicImage value="/img/icons/delete.png" onclick="#{rich:element('produtoId')}.value = '';#{rich:element('produtoNome')}.value = '';" 
+			disabled="#{disabled}" />
+
+		<rich:suggestionbox width="400" 
+			nothingLabel="(#{messages.resultSetEmpty})"
+			suggestionAction="#{produtoSearch.getSuggestionList}"
+			minChars="1"
+			for="produtoNome"
+			id="produtoSuggestion" var="produto"
+			fetchValue="#{produto.nome}"
+			frequency="1"
+			usingSuggestObjects="true"
+			onobjectchange="#{rich:element('produtoId')}.value = #{rich:component('produtoSuggestion')}.getSelectedItems().pluck('id');">
+			<h:column>
+				<h:outputText value="#{produto.codigo}" /> - <h:outputText value="#{produto.nome}" />
+			</h:column>
+
+		</rich:suggestionbox>
+	</h:panelGrid>
+
+</ui:composition>

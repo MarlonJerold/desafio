@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages login-view-id="/login.xhtml" no-conversation-view-id="/home.xhtml"
+	xmlns="http://jboss.com/products/seam/pages" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+	<!-- REGRAS GERAIS PARA O SISTEMA -->
+	<page view-id="*">
+		<navigation>
+			<rule if-outcome="home">
+				<redirect view-id="/home.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+	<page view-id="/home.xhtml">
+		<restrict>#{identity.loggedIn}</restrict>
+	</page>
+	<page view-id="/Manter*">
+		<restrict>#{identity.hasRole("cadTempoFila")}</restrict>
+		<restrict>#{identity.loggedIn}</restrict>
+	</page>
+	<page view-id="/Operacao*">
+		<restrict>#{identity.hasRole("consultaTmpFila")}</restrict>
+		<restrict>#{identity.loggedIn}</restrict>
+	</page>
+	<page view-id="/RegistrarRecebimentoAutomatico*">
+		<restrict>#{identity.hasRole("regRecebAuto")}</restrict>
+		<restrict>#{identity.loggedIn}</restrict>
+	</page>
+	<!--page view-id="/RegistrarOcorrenciaList.xhtml">
+		<restrict>#{!empty ugbRepo.getPorResponsavel(usuarioRepo.usuarioLogado.id)}</restrict>
+		<restrict>#{identity.loggedIn}</restrict>
+	</page-->
+	<exception class="org.jboss.seam.framework.EntityNotFoundException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.EntityNotFoundException']}</message>
+		</redirect>
+	</exception>
+	<exception class="javax.persistence.EntityNotFoundException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.EntityNotFoundException']}</message>
+		</redirect>
+	</exception>
+	<exception class="javax.persistence.OptimisticLockException">
+		<end-conversation />
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.OptimisticLockException']}</message>
+		</redirect>
+	</exception>
+	<exception class="org.jboss.seam.security.AuthorizationException"
+		log-level="info">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.AuthorizationException']}</message>
+		</redirect>
+	</exception>
+	<exception class="javax.faces.application.ViewExpiredException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.ViewExpiredException']}</message>
+		</redirect>
+	</exception>
+	<exception class="org.jboss.seam.ConcurrentRequestTimeoutException"
+		log-level="trace">
+		<http-error error-code="503" />
+	</exception>
+	<exception>
+		<redirect view-id="/error.xhtml">
+			<message severity="error">#{messages['org.jboss.seam.UnexpectedError']}</message>
+		</redirect>
+	</exception>
+	<exception class="org.hibernate.exception.ConstraintViolationException">
+		<redirect view-id="/error.xhtml">
+			<message severity="error">#{messages['org.hibernate.exception.ConstraintViolationException']}</message>
+		</redirect>
+	</exception> 
+</pages>

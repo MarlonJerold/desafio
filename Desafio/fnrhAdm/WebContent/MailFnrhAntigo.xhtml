@@ -1,0 +1,112 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:m="http://jboss.com/products/seam/mail"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<m:from name="#{messages.emailFrom}" address="#{reservaService.emailFrom}" />
+	<m:bcc name="TI Desenvolvimento" address="#{reservaService.emailCco}" />
+	<ui:repeat value="#{reservaService.emailDestinatarios}" var="dest">
+    	<m:to name="#{dest}">#{dest}</m:to>
+	</ui:repeat>
+<!-- <m:to name="#{reservaService.emailTo}">#{reservaService.emailTo}</m:to> -->
+	
+	<m:subject><h:outputText value="#{messages.emailAssunto}"/></m:subject>
+	<m:body>
+		<table width="537" cellspacing="0" cellpadding="0" border="0"
+			align="center">
+			<tr>
+				<td><a href="https://www.beachpark.com.br/site/pt/home/home.asp"
+					target="_blank"><img
+						style="display: block;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/01.jpg"
+						width="537" height="131" border="0" /></a></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.beachpark.com.br/site/pt/home/home.asp"
+					target="_blank"> <img
+						style="display: block;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/02.jpg"
+						width="537" height="174" border="0" /></a></td>
+			</tr>
+			<tr>
+				<td><a href="#{reservaService.emailLink}" title="Pre-Chekin" target="_blank">
+						<img style="display: block;" alt="Pre-Checkin"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/03.jpg"
+						width="537" height="82" border="0" />
+				</a></td>
+			</tr>
+			<tr>
+				<td><img
+						style="display: block;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/04.jpg"
+						width="537" height="296" border="0" /></td>
+			</tr>
+			<tr>
+				<td><img
+						style="display: block;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/05.jpg"
+						width="537" height="85" border="0" /></td>
+			</tr>
+			<tr>
+				<td><img
+						style="display: block;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/06.jpg"
+						width="537" height="34" border="0" />										
+				</td>
+			</tr>
+			<tr style="float: left;">
+				<td><img
+						style="display: block; float: left;margin-right: 26px;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/07.jpg"
+						width="313" height="57" border="0" />										
+				</td>
+			</tr>
+			<tr style="float: left;">
+				<td><a href="https://radio.beachpark.com.br/" ><img
+						style="display: block; float: left;margin-left: 10px;margin-top: 19px;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/icon-radio.jpg"
+						width="27" height="27" border="0" /></a>	
+							
+					<a href="https://twitter.com/beachpark" ><img
+						style="display: block; float: left;margin-left: 10px;margin-top: 19px;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/icon-twitter.jpg"
+						width="27" height="27" border="0" /></a>
+								
+					<a href="https://blog.beachpark.com.br/" ><img
+						style="display: block; float: left;margin-left: 10px;margin-top: 19px;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/icon-blog.jpg"
+						width="27" height="27" border="0" /></a>
+								
+					<a href="https://www.facebook.com/BeachParkBrasil"><img
+						style="display: block; float: left;margin-left: 10px;margin-top: 19px;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/icon-face.jpg"
+						width="27" height="27" border="0" /></a>
+								
+					<a href="https://www.beachpark.com.br/tv"><img
+						style="display: block; float: left;margin-left: 10px;margin-top: 19px;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/icon-tv.jpg"
+						width="27" height="27" border="0" /></a>												
+				</td>
+			</tr>
+			<tr>
+				<td><img
+						style="display: block; float: left;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/08.jpg"
+						width="537" height="10" border="0" />										
+				</td>
+			</tr>
+			<tr>
+				<td><img
+						style="display: block;"
+						src="https://pre-checkin.beachpark.com.br/fnrh/img/mail/09.jpg"
+						width="537" height="60" border="0" />										
+				</td>
+			</tr>
+			<!-- Default -->
+		</table>
+	</m:body>
+</m:message>

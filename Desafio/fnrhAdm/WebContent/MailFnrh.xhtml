@@ -1,0 +1,19 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:m="http://jboss.com/products/seam/mail"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<m:from name="#{messages.emailFrom}" address="#{reservaService.emailFrom}" />
+	<m:bcc name="TI Desenvolvimento" address="#{reservaService.emailCco}" />
+	<ui:repeat value="#{reservaService.emailDestinatarios}" var="dest">
+    	<m:to name="#{dest}">#{dest}</m:to>
+	</ui:repeat>	
+	<m:subject><h:outputText value="#{messages.emailAssunto}"/></m:subject>
+	<m:body>
+		<h:outputText value="#{reservaService.content}" escape="false"/>
+	</m:body>
+</m:message>

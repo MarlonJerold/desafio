@@ -1,0 +1,45 @@
+<f:subview xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<rich:modalPanel id="panel" width="650" height="150">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="#{messages.comentario}"></h:outputText>
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/icons/close.png"
+					styleClass="hidelink" id="hidelink" />
+				<rich:componentControl for="panel" attachTo="hidelink"
+					operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<s:div>
+			<s:decorate id="descricaoComentario" template="/layout/display.xhtml">
+				<ui:define name="label">
+					<h:outputText value="#{messages.descricao}" styleClass="label" />
+				</ui:define>
+				<h:inputTextarea value="#{solicitacaoCtrl.comentario.comentario}"
+					styleClass="input" readonly="true"/>
+			</s:decorate>
+			<s:decorate id="anexo" template="/layout/display.xhtml"
+				rendered="#{not empty solicitacaoCtrl.comentario.comentarioAnexo}">
+				<ui:define name="label">
+					<h:outputText value="#{messages.arquivo}" styleClass="label" />
+				</ui:define>
+				<s:link styleClass="link_titulo  link_download"
+					action="#{solicitacaoCtrl.download}" propagation="none">
+					<f:param name="anexoId"
+						value="#{solicitacaoCtrl.comentario.comentarioAnexo.id}" />
+					<h:outputText
+						value="#{solicitacaoCtrl.comentario.comentarioAnexo.nomeArquivo}" />
+				</s:link>
+			</s:decorate>
+		</s:div>
+	</rich:modalPanel>
+</f:subview>

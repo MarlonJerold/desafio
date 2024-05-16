@@ -1,0 +1,10 @@
+.auto {
+	float: left;
+	clear: left;
+	width:auto;
+	font-weight: bold;
+	margin-top: 3px;
+	padding: 5px;
+	vertical-align: top;
+	width: 80px;
+}

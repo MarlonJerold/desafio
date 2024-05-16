@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.20" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">__isdisplay__data_2828_0</property>
+            <property name="value"></property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__tpContabilizacao_2835_1</property>
+            <property name="value">2</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__dsContabilizacao_2837_2</property>
+            <property name="value"></property>
+        </structure>
+        <structure>
+            <property name="name">dsContabilizacao_2837_3</property>
+            <property name="value"></property>
+        </structure>
+        <structure>
+            <property name="name">dsContabilizacao_2837_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">data_2828_4</property>
+            <property name="value"></property>
+        </structure>
+        <structure>
+            <property name="name">data_2828_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">tpContabilizacao_2835_5</property>
+            <property name="value">2</property>
+        </structure>
+        <structure>
+            <property name="name">tpContabilizacao_2835_type_</property>
+            <property name="value">decimal</property>
+        </structure>
+    </list-property>
+</report>

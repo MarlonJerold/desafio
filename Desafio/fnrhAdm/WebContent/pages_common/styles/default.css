@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url("../images/bg_full.png") repeat-x #008BAE;
+    font-family: "Trebuchet MS",Arial;
+    color: #000066;
+}
+
+#top {
+	position:relative;
+	width: auto;
+	height: 126px;
+}
+
+.logo {
+	background: url("../images/logo.png") no-repeat;
+	width: 190px;
+	height: 93px;
+	top:15px; left: 15px;
+	position: absolute;
+}
+
+.titulo {
+	background: url("../images/tarja_chamada.png") no-repeat;
+	width: 284px;
+	height: 30px;
+	bottom:15px; right: 15px;
+	position: absolute;
+}
+
+.message_error {
+	margin:10px 0 0 0;
+	background: url("../images/exclamation_error.png") no-repeat 15px center #fffacd;
+	text-indent: 40px;
+	padding: 5px 3px;
+}
+
+#content {
+	background: url("../images/bg_content.png") repeat-x #E8F6FA;
+	position:relative;
+	width: auto;
+	padding: 40px 20px;
+}
+
+#content h2 {
+	line-height: 50px;
+	font-size: 1.1em;
+}
+
+.field {
+	display: block;
+	margin: 10px 0 0 0;
+}
+
+.field label {
+	float: left;
+	width: 90px;
+	font-size: 1.0em;
+	font-weight: bold;
+}
+
+.field labelbig {
+	float: left;
+	width: 90px;
+	font-size: 1.0em;
+	font-weight: bold;
+}
+
+.field input {
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	border-radius: 5px;
+	width: 200px;
+	border: 2px solid #008BAE;
+	padding: 3px 5px;
+	font-size: 1.0em;
+}
+
+.actions {
+	width:300px;
+	/*text-align:right;*/
+	margin: 15px 0 0 0;
+}
+
+.error {
+	background: url("../images/error.png") no-repeat left center;
+	text-indent: 100px;
+	font-size: 70px;
+	line-height: 130px;
+}
+
+.denied {
+	background: url("../images/denied.png") no-repeat left center;
+	text-indent: 70px;
+	font-size: 40px;
+	line-height: 90px;
+}
+
+

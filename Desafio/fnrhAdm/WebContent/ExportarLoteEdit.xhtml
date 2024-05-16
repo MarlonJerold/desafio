@@ -1,0 +1,174 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" 
+	xmlns:a="http://richfaces.org/a4j" template="layout/template.xhtml">
+	
+	<ui:define name="title">#{messages.menuExportarLote}</ui:define>
+	<ui:define name="body">
+		<h:form id="loteForm" styleClass="edit">
+			<a:loadScript src="/scripts/jquery.maskedinput-1.2.2.js" />			
+			<a:loadScript src="/scripts/jquery.alphanumeric.js" />
+			<a:loadScript src="/scripts/jquery.price_format.1.3.js" />
+			
+			<rich:jQuery  selector="#quantidadeLote" timing="onload"  query="numeric();" />
+			<rich:jQuery  selector="#quantidadeDias" timing="onload"  query="numeric();" />
+		
+			<rich:panel>
+			<h:panelGrid columns="2">
+				<s:decorate id="codigoField" template="layout/edit.xhtml">
+					<ui:define name="label"><h:outputText value="#{messages.codigo}" /></ui:define>				
+					<h:inputText name="codigo" value="#{exportarLoteCtrl.lote.codigo}" maxlength="50" size="20" readonly="true"/>					
+				</s:decorate>
+				<s:decorate id="tipoLoteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.tipoLote}</ui:define>
+					<h:inputText name="tipoLote" value="#{exportarLoteCtrl.lote.tipoLote.descricao}" maxlength="50" size="20"  readonly="true"/>
+				</s:decorate>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+					<s:decorate id="produtoField" template="layout/edit.xhtml">
+						<ui:define name="label">#{messages.produto}</ui:define>						
+						<h:inputText name="produto" value="#{exportarLoteCtrl.lote.produtoErp.codigo}-#{exportarLoteCtrl.lote.produtoErp.descricao}" maxlength="50" size="50"  readonly="true"/>							
+					</s:decorate>						
+					<s:decorate id="valorField" template="layout/edit.xhtml" >
+						<ui:define name="label">#{messages.valor}</ui:define>
+						<h:inputText id="valor" value="#{exportarLoteCtrl.lote.valor}" maxlength="50" size="10" readonly="true">			
+						<f:converter converterId="ValorConverter" />
+							<rich:jQuery selector="#valor"
+								query="priceFormat({  prefix: '', centsSeparator: ',', thousandsSeparator: '', limit: 5, centsLimit: 2})"
+								timing="onload" />		
+						</h:inputText>		
+					</s:decorate>							
+		     </h:panelGrid>		     
+	      	<h:panelGrid columns="1">     
+		      	<s:decorate  template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.distribuicao}</ui:define>
+					<h:inputText name="distribuicao" value="#{exportarLoteCtrl.lote.distribuicao.descricao}" maxlength="50" size="50"  readonly="true"/>
+				</s:decorate>
+		  	</h:panelGrid>
+	     	<h:panelGrid columns="1">
+	     		<s:decorate id="descricaoLoteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.descricao}</ui:define>
+					<h:inputText id="descricao" value="#{exportarLoteCtrl.lote.descricao}" maxlength="200" size="100"  readonly="true"/>
+				</s:decorate>
+				<s:decorate id="descricaoImpressaoField" template="layout/edit.xhtml" >
+					<ui:define name="label">#{messages.descricaoImpressao}</ui:define>
+					<h:inputTextarea name="descricaoImpressao"  value="#{exportarLoteCtrl.lote.descricaoImpressao}" cols="70" rows="10"  maxlength="10"  readonly="true"/> 
+				</s:decorate>
+	     	</h:panelGrid>
+	     	<h:panelGrid columns="3">
+     			<s:decorate id="tipoValidadeField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.tipoValidade}</ui:define>						
+					<h:selectOneMenu id="tipoValidadeList" value="#{exportarLoteCtrl.lote.tipoValidade}" disabled="true" >						
+						<s:selectItems var="tipoValidade" value="#{exportarLoteCtrl.tipoValidadeList}" label="#{tipoValidade.label}"
+						 noSelectionLabel="#{messages.selectMessage}" />
+						<s:convertEnum />
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate id="identificacaoBilheteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.identificacaoBilhete}</ui:define>
+					<h:selectOneMenu id="identificacaoBilheteList" value="#{exportarLoteCtrl.lote.identificacaoBilhete}"  disabled="true" >
+						<s:selectItems var="identificacaoBilhete" value="#{exportarLoteCtrl.identificacaoBilheteList}" label="#{identificacaoBilhete.label}" 
+						noSelectionLabel="#{messages.selectMessage}"/>
+						<s:convertEnum />
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate id="tipoVendaField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.tipoVenda}</ui:define>
+					<h:selectOneMenu id="tipoVendaList" value="#{exportarLoteCtrl.lote.tipoVenda}"  disabled="true" >						
+						<s:selectItems var="tipoVenda" value="#{exportarLoteCtrl.tipoVendaList}" label="#{tipoVenda.descricao}"
+						 noSelectionLabel="#{messages.selectMessage}" />
+						 <s:convertEnum />
+					</h:selectOneMenu>					
+				</s:decorate>
+			</h:panelGrid>		
+			<h:panelGrid columns="3">				
+				<s:decorate id="statusField" template="layout/edit.xhtml" rendered="#{not empty exportarLoteCtrl.lote.id}">
+					<ui:define name="label">#{messages.status}</ui:define>
+					<h:selectOneMenu id="statusIntegracaoLoteList" value="#{exportarLoteCtrl.lote.statusIntegracao}" disabled="true" >						
+						<s:selectItems var="status" value="#{exportarLoteCtrl.statusIntegracaoLoteList}" label="#{status.descricao}"
+						 noSelectionLabel="#{messages.selectMessage}" />
+						 <s:convertEnum />
+					</h:selectOneMenu>					
+				</s:decorate>												
+				<s:decorate id="quantidadeLoteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.quantidadeBilhetesLotes}</ui:define>					
+					<h:inputText id="quantidadeLote" value="#{exportarLoteCtrl.lote.quantidade}" maxlength="10" size="10" readonly="true"/>					
+				</s:decorate>	
+			 	<s:decorate id="quantidadeDiasField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.quantidadeDiasValidade}</ui:define>
+					<h:inputText id="quantidadeDias" value="#{exportarLoteCtrl.lote.quantidadeDiasValidade}" maxlength="4" size="10" readonly="true"/>
+				</s:decorate> 	
+			</h:panelGrid>	
+			<h:panelGrid columns="2">		
+				<s:decorate id="dataInicialField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataInicial}" />
+					</ui:define>				    
+					<rich:jQuery id="mskData1" selector=".txtDataInicial"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+					<h:inputText id="txtDataInicial" value="#{exportarLoteCtrl.lote.dataInicial}" maxlength="4" size="10" readonly="true"/>	
+					
+				</s:decorate>							
+				<s:decorate id="dataValidadeField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataValidade}" />
+					</ui:define>
+					<rich:jQuery id="mskData1" selector=".txtDataFinal"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+					<h:inputText id="txtDataFinal" value="#{exportarLoteCtrl.lote.dataValidade}" maxlength="4" size="10" readonly="true"/>	
+				</s:decorate>	
+				<s:decorate id="dataInicialVendaField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataInicialVenda}" />
+					</ui:define>
+					<rich:jQuery id="mskData1" selector=".txtDataInicialVenda"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+						
+					<h:inputText id="txtDataInicialVenda" value="#{exportarLoteCtrl.lote.dataInicialVenda}" maxlength="4" size="10" readonly="true"/>	
+					
+				</s:decorate>							
+				<s:decorate id="dataFinalVendaField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataFinalVenda}" />
+					</ui:define>
+					<rich:jQuery id="mskData1" selector=".txtDataFinalVenda"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+						
+					<h:inputText id="txtDataFinalVenda" value="#{exportarLoteCtrl.lote.dataFinalVenda}" maxlength="4" size="10" readonly="true"/>	
+				</s:decorate>				
+	     	</h:panelGrid>
+	     	<h:panelGrid columns="2">
+	     		<s:decorate id="provisorioField" template="layout/edit.xhtml">			
+					<ui:define name="label">#{messages.bilheteProvisorio}</ui:define>
+					<h:selectBooleanCheckbox value="#{exportarLoteCtrl.lote.provisorio}" label="#{messages.bilheteProvisorio}" disabled="true"/>					
+				</s:decorate>
+				<s:decorate id="preImpressoField" template="layout/edit.xhtml">			
+					<ui:define name="label">#{messages.bilhetePreImpresso}</ui:define>
+					<h:selectBooleanCheckbox value="#{exportarLoteCtrl.lote.preImpresso}" label="#{messages.bilhetePreImpresso}" disabled="true"/>					
+				</s:decorate>
+				<s:decorate id="retornoField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.retorno}</ui:define>
+					<h:selectBooleanCheckbox value="#{exportarLoteCtrl.lote.retorno}" label="#{messages.retorno}}" disabled="true"/>
+				</s:decorate>	
+	     		<s:decorate id="inativoField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.inativo}</ui:define>
+					<h:selectBooleanCheckbox value="#{exportarLoteCtrl.lote.inativo}" label="#{messages.inativo}" disabled="true"/>
+				</s:decorate>
+	     	</h:panelGrid>
+			<div style="clear:both" />			
+			</rich:panel>
+			<div class="actionButtons">
+				<h:commandButton value="#{messages.actionExport}" action="#{exportarLoteCtrl.exportar}" rendered="#{exportarLoteCtrl.habilitaExportacao}"/>			
+				
+				<h:commandButton value="#{messages.actionExportErp}" action="#{exportarLoteCtrl.exportarErp}" rendered="#{exportarLoteCtrl.habilitaExportacaoErp}"/>			
+				<s:button value="#{messages.actionBack}" action="#{exportarLoteCtrl.backList}" imediate="true"/>
+			</div>
+		</h:form>	
+	</ui:define>
+</ui:composition>
+

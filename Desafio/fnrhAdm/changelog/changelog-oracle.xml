@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+                   
+
+    <!-- inclua os arquivos com os changesets, um a um, na ordem em que devem ser executados. -->
+
+	<!-- Altera quantidade de dias para o envio do e-mail de 7 para 15 -->
+	 <include file="changelog-1.0.0-oracle.sql" />
+	
+	<!-- Alteração na view de reserva fnrh para incluir a origem da reserva-->
+    <changeSet id="reserva_fnrh" author="bpreceptor" runOnChange="true">
+        <sqlFile path="reserva_fnrh-1.0.0.sql"
+                 splitStatements="true"
+                 stripComments="false" />
+        <rollback>
+            <sqlFile path="reserva_fnrh_bkp-1.0.0.sql"
+                     splitStatements="true"
+                     stripComments="false" />
+        </rollback>
+    </changeSet>
+    
+    <include file="changelog-1.1.0-oracle.sql" /> 
+      
+    <include file="changelog-1.2.0-oracle.sql" /> 
+    
+    <!-- Alteração na view de reserva fnrh para incluir a origem da reserva-->
+    <changeSet id="reserva_fnrh_1_1" author="bpreceptor" runOnChange="true">
+        <sqlFile path="reserva_fnrh-1.1.0.sql"
+                 splitStatements="true"
+                 stripComments="false" />
+        <rollback>
+            <sqlFile path="reserva_fnrh-1.0.0.sql"
+                     splitStatements="true"
+                     stripComments="false" />
+        </rollback>
+    </changeSet>
+    
+</databaseChangeLog>

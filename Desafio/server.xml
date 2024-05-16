@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Server port="8005" shutdown="SHUTDOWN">
+
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JasperListener" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+
+<GlobalNamingResources>
+
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="10" maxIdle="1" maxWait="5000" name="jdbc/mysql" password="fnrhbpkprotot" type="javax.sql.DataSource" url="jdbc:mysql://srvmysql.bpark.com.br:3306/fnrh" username="fnrh" validationQuery="SELECT 1"/>
+
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="10" maxIdle="1" maxWait="10000" name="jdbc/mysqlExterno" password="fnrhbpkprotot" type="javax.sql.DataSource" url="jdbc:mysql://mysqlweb2.bpark.com.br/fnrh" username="fnrh" validationQuery="SELECT 1"/>
+
+</GlobalNamingResources>
+
+  <Service name="Catalina">
+  
+    <Connector port="8080" protocol="HTTP/1.1" 
+               connectionTimeout="20000" 
+               redirectPort="8443" />
+    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+
+      <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+        <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
+        <Valve
+                className="org.apache.catalina.valves.AccessLogValve"
+                directory="${catalina.base}/logs"
+                renameOnRotate="true"
+                prefix="access_log-"
+                fileDateFormat="yyyy"   
+                suffix=".log"
+                pattern="%m %U %s %u %a %D %T"
+        />
+      </Host>
+    </Engine>
+  </Service>
+</Server>

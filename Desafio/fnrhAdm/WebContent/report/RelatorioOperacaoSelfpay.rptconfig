@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.20" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">__isnull_2192_0</property>
+            <property name="value">dataIni_2192</property>
+        </structure>
+        <structure>
+            <property name="name">dataIni_2192_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isnull_2194_1</property>
+            <property name="value">dataFim_2194</property>
+        </structure>
+        <structure>
+            <property name="name">dataFim_2194_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isnull_2195_2</property>
+            <property name="value">nsu_2195</property>
+        </structure>
+        <structure>
+            <property name="name">nsu_2195_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isnull_2198_3</property>
+            <property name="value">status_2198</property>
+        </structure>
+        <structure>
+            <property name="name">status_2198_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isnull_2202_4</property>
+            <property name="value">statusId_2202</property>
+        </structure>
+        <structure>
+            <property name="name">statusId_2202_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isnull_2210_5</property>
+            <property name="value">terminal_2210</property>
+        </structure>
+        <structure>
+            <property name="name">terminal_2210_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isnull_2214_6</property>
+            <property name="value">terminalId_2214</property>
+        </structure>
+        <structure>
+            <property name="name">terminalId_2214_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__time_2433_7</property>
+            <property name="value">20/10/2010</property>
+        </structure>
+        <structure>
+            <property name="name">time_2433_8</property>
+            <property name="value">20/10/2010</property>
+        </structure>
+        <structure>
+            <property name="name">time_2433_type_</property>
+            <property name="value">string</property>
+        </structure>
+    </list-property>
+</report>

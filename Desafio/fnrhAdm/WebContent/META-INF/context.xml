@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/fnrhAdm" reloadable="true">
+	<ResourceLink global="jdbc/bpds" name="jdbc/bpds"
+		type="javax.sql.DataSource" />
+		
+<!-- 	<ResourceLink global="jdbc/mssql" name="jdbc/mssql"
+		type="javax.sql.DataSource" /> -->
+		
+ 	<ResourceLink global="jdbc/mysql" name="jdbc/mysql"
+		type="javax.sql.DataSource" />
+		
+	<ResourceLink global="jdbc/mysqlExterno" name="jdbc/mysqlExterno"
+		type="javax.sql.DataSource" />	 
+</Context>

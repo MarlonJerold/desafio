@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+	<converter>
+		<converter-id>ValorConverter</converter-id>
+		<converter-class>br.com.techwayinfo.converter.ValorConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>BigDecimalConverter</converter-id>
+		<converter-class>br.com.techwayinfo.converter.BigDecimalConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>CnpjConverter</converter-id>
+		<converter-class>br.com.techwayinfo.converter.CnpjConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>CepConverter</converter-id>
+		<converter-class>br.com.techwayinfo.converter.CepConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>TelefoneConverter</converter-id>
+		<converter-class>br.com.techwayinfo.converter.TelefoneConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>CepComplementoConverter</converter-id>
+		<converter-class>br.com.techwayinfo.converter.CepComplementoConverter</converter-class>
+	</converter>
+
+	<application>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+	</application>
+</faces-config>

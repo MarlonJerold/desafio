@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view contentType="text/html"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:a="http://richfaces.org/a4j"
+        xmlns:s="http://jboss.com/products/seam/taglib"
+        xmlns:rich="http://richfaces.org/rich">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>#{messages.project}::<ui:insert name="title" /></title>
+    <link href="stylesheet/styleFnrh.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+    <a:loadStyle src="resource:///stylesheet/theme.xcss"/>
+    <a:loadStyle src="/stylesheet/formFnrh.css"/>
+    <a:loadStyle src="/stylesheet/themeFnrh.css"/>
+    <ui:insert name="head"/>
+</head>
+
+<body>
+
+<div id="navigation_section">
+
+	<a name="topo" id="topo"></a>
+	
+	<div id="header_container">
+		<div style="float: right;">
+		<h:form>
+			<h:commandLink action="#{localeSelector.selectLanguage('pt')}">
+				<img src="fnrh_images/flag-brazil.png" />
+			</h:commandLink>
+			<h:commandLink action="#{localeSelector.selectLanguage('en')}">
+				<img src="fnrh_images/flag-english.png" />
+			</h:commandLink>
+			<h:commandLink action="#{localeSelector.selectLanguage('es')}">
+				<img src="fnrh_images/flag-espanol.png" />
+			</h:commandLink>
+		</h:form>
+		</div>
+
+		<div id="logo">
+			<a href="http://www.beachpark.com.br" target="_blank"><img
+				src="fnrh_images/logo.png" alt="BEACH PARK" title="BEACH PARK" /></a>
+		</div>
+		<div id="navigation">
+			<div class="menu01">
+				<a href="http://www.beachpark.com.br/conheca-o-beach-park/"
+					title="BEACH PARK">BEACH PARK</a>
+			</div>
+			<div class="menu02">
+				<a href="http://www.beachpark.com.br/parque-aquatico/"
+					title="PARQUE AQUÁTICO">PARQUE AQUÁTICO</a>
+			</div>
+			<div class="menu03">
+				<a href="http://www.beachpark.com.br/resort/" title="RESORTS">RESORTS</a>
+			</div>
+			<div class="menu04">
+				<a href="http://www.beachpark.com.br/praia/" title="PRAIA">PRAIA</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="clr"></div>
+
+  <div class="body">
+
+	<div id="topLine"></div>
+		<div id="contacto_section">
+			<div id="contacto">
+				<a name="contato" id="contato"></a>
+				<div class="form_box">
+					<div class="mid">
+						<div class="coontact_box">
+	
+						    <h:messages id="messages" globalOnly="true" styleClass="message"
+						        errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+						        rendered="#{showGlobalMessages != 'false'}">
+						    </h:messages>
+						    <ui:insert name="body"/>
+						    
+						</div>
+					</div>
+				</div>
+				
+				<div class="clr"></div>
+	
+				<div id="botLine"></div>				
+				
+			</div>
+		</div>
+  </div>
+
+	<div class="clr"></div>
+
+	<div id="footer_section">
+		<div id="footer_graphics"></div>
+		<div id="footer_contents">
+			<div class="left">
+				<p class="footer-text">R. Porto das Dunas, 2734 - Porto das
+					Dunas - Aquiraz/CE - CEP: 61700-000 - (85) 4012-3000</p>
+			</div>
+			<div class="right">
+				<a class="radio" href="http://radio.beachpark.com.br/"></a> <a
+					class="twitter" href="http://twitter.com/DonaFoca"></a> <a
+					class="blog" href="http://beachparkblog.com.br/"></a> <a
+					class="facebook" href="http://www.facebook.com/BeachParkBrasil"></a>
+				<a class="tv" href="http://www.beachpark.com.br/tv"></a>
+			</div>
+		</div>
+
+		<div id="footer_contents2">
+			<p class="dotline">&nbsp;</p>
+		</div>
+		<div id="footer_contents3">
+			<div class="left">
+				<p>
+					<span>© COPYRIGHT BEACH PARK</span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+</f:view>

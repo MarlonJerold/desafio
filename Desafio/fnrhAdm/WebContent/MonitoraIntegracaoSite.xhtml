@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
+	
+	<ui:define name="title">
+		<h:outputText value="#{messages.menuMonitoraIntegracaoSite}"/>
+	</ui:define>
+	<ui:define name="body" action="#{monitoraIntegracaoSiteCtrl.consultar}">
+		<script language="Javascript">
+			window.onload = function () {
+				//alert('Atualizando ....');				
+				setTimeout('location.reload();', 60000);
+			}
+		</script>
+		
+		<h:form id="monitoraIntegracaoSiteForm" style="edit" onsubmit="#{monitoraIntegracaoSiteCtrl.consultarDados()}">
+			<rich:panel >
+				<div class="actionButtons">
+						<h:commandButton value="#{messages.actionSearch}" action="#{monitoraIntegracaoSiteCtrl.consultar}" />
+				</div>	
+				<h:graphicImage value="/img/#{monitoraIntegracaoSiteCtrl.img}"  />    
+				<h:outputText value="#{monitoraIntegracaoSiteCtrl.mensagem}"/>
+				
+			</rich:panel>
+			<div class="actionButtons">
+				<h:commandButton value="#{messages.actionSearchHistory}" action="#{monitoraIntegracaoSiteCtrl.consultarHistorico}" />
+			</div>	
+			<rich:panel rendered="#{not empty monitoraIntegracaoSiteCtrl.logsIntegracao}">
+				
+				<f:facet name="header">
+					<h:outputText value="#{historico.integracoes}"/>
+				</f:facet>
+				<h:outputText value="#{messages.resultSetEmpty}" rendered="#{empty monitoraIntegracaoSiteCtrl.logsIntegracao}"/>
+				<rich:dataTable value="#{monitoraIntegracaoSiteCtrl.logsIntegracao}" var="log" rendered="#{not empty monitoraIntegracaoSiteCtrl.logsIntegracao}" styleClass="dataGrid">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="" />
+						</f:facet>
+					 <h:graphicImage value="/img/true.png" rendered="#{log.status=='0'}" />
+					 <h:graphicImage value="/img/false.png" rendered="#{log.status=='1'}" />    
+					</h:column>
+					<h:column >
+						<f:facet name="header">
+							<h:outputText value="#{messages.dataHora}" />
+						</f:facet>
+						<h:outputText value="#{log.timeStamp}">
+							<s:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+						</h:outputText>
+					</h:column>
+					<h:column >
+						<f:facet name="header">
+							<h:outputText value="#{messages.descricao}" />
+						</f:facet>
+						<h:outputText value="#{log.descricao}" />
+					</h:column>
+						
+				</rich:dataTable>
+			</rich:panel>	
+		</h:form>
+	</ui:define>	
+</ui:composition>

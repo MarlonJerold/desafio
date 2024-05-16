@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+/*  Buttons */
+.btn-primary {
+    font-weight:bold;
+	font-family: "Trebuchet MS",Arial;
+}
+.btn-secondary {
+    font-weight:normal;
+    font-family: "Trebuchet MS",Arial;
+}
+.btn-primary, .btn-secondary {
+    padding:.5em 1.0em;
+    border:1px solid #F30;
+    background-color:#F60;
+    text-align:center;
+    cursor:pointer;
+    font-size:1.0em;
+    width:auto;
+    overflow:visible;
+    -moz-border-radius:7px;
+    -webkit-border-radius:7px;
+    border-radius:7px;
+}
+.btn-primary {
+    background: #9E4C00 url(../images/button-orange.gif) no-repeat left center;
+    color:#fff;
+    border-color:#F90;
+    text-shadow:-1px -1px 0 #37730e;
+}
+.btn-secondary {
+    background: #e7e8e9 url(../images/button-silver.gif) no-repeat left center;
+    color:#555;
+    border-color:#b3b3b3;
+    text-shadow:1px 1px 0 #fafafa;
+}
+.btn-primary-hover {
+    background-position:right center;
+    border-color:#F90;
+    color:#fff;
+    background-color:#C47600;
+}
+.btn-secondary-hover {
+    background-position:right center;
+    background-color:#F1F1F2;
+    color:#333;
+    border-color:#777;
+}
+/*buttons with inline icons*/
+button span.icon {
+    display: inline-block;
+    height:12px;
+    margin-right:5px;
+    width:16px;
+}
+/*add buttons*/
+button.action-add {
+    font-weight:normal;
+}
+button.action-add span.icon {
+    background:url(../images/icon-add.png) 0 0 no-repeat;
+}
+button.action-ignore span.icon {
+    background:url(../images/icon-ignore.png) 0 0 no-repeat;
+}

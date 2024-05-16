@@ -1,0 +1,208 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" 
+	xmlns:a="http://richfaces.org/a4j" template="layout/template.xhtml">
+	
+	<ui:define name="title">#{messages.menuLote}</ui:define>
+	<ui:define name="body">
+		<h:form id="loteForm" styleClass="edit">
+			<a:loadScript src="/scripts/jquery.maskedinput-1.2.2.js" />			
+			<a:loadScript src="/scripts/jquery.alphanumeric.js" />
+			<a:loadScript src="/scripts/jquery.price_format.1.3.js" />
+			
+			<rich:jQuery  selector="#quantidadeLote" timing="onload"  query="numeric();" />
+			<rich:jQuery  selector="#quantidadeDias" timing="onload"  query="numeric();" />
+		
+			<rich:panel>
+			<h:panelGrid columns="2">
+				<s:decorate id="codigoField" template="layout/edit.xhtml">
+					<ui:define name="label"><h:outputText value="#{messages.codigo}" /></ui:define>				
+					<h:inputText name="codigo" value="#{loteCtrl.lote.codigo}" maxlength="50" size="20" required="true" readonly="#{not empty loteCtrl.lote.id}"/>					
+				</s:decorate>
+				<s:decorate id="tipoLoteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.tipoLote}</ui:define>
+					<h:selectOneMenu id="tipoLoteList" value="#{loteCtrl.lote.tipoLote}" required="true" disabled="#{not empty loteCtrl.lote.id}">
+						<s:selectItems var="tipoLote" value="#{loteCtrl.tipoLoteList}" label="#{tipoLote.descricao}" 
+						noSelectionLabel="#{messages.selectMessage}"/>
+						<s:convertEntity />
+						<a:support event="onchange" reRender="descricao" ajaxSingle="true" action="#{loteCtrl.setaDescricaoLote}" />
+					</h:selectOneMenu>
+				</s:decorate>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+					<s:decorate id="produtoField" template="layout/edit.xhtml">
+							<ui:define name="label">#{messages.produto}</ui:define>
+							<h:selectOneMenu id="produtoList" value="#{loteCtrl.lote.produto}" required="true" disabled="#{not empty loteCtrl.lote.id}">
+								<s:selectItems var="produto" value="#{loteCtrl.produtoList}" label="#{produto.codigo}-#{produto.nome}"
+									 noSelectionLabel="#{messages.selectMessage}" />
+								<s:convertEntity />
+								<a:support event="onchange" reRender="valor" ajaxSingle="true" action="#{loteCtrl.setaValor}" />
+							</h:selectOneMenu>
+					</s:decorate>						
+					<s:decorate id="valorField" template="layout/edit.xhtml" >
+						<ui:define name="label">#{messages.valor}</ui:define>
+						<h:inputText id="valor" value="#{loteCtrl.lote.produto.valor}" maxlength="50" size="10" readonly="true">			
+						<f:converter converterId="ValorConverter" />
+							<rich:jQuery selector="#valor"
+								query="priceFormat({  prefix: '', centsSeparator: ',', thousandsSeparator: '', limit: 5, centsLimit: 2})"
+								timing="onload" />		
+						</h:inputText>		
+					</s:decorate>							
+		     </h:panelGrid>
+	      	<h:panelGrid columns="1">
+		      	<s:decorate  template="layout/edit.xhtml">
+								<ui:define name="label">#{messages.distribuicao}</ui:define>
+								<h:selectOneMenu value="#{loteCtrl.lote.distribuicao}" disabled="#{not empty loteCtrl.lote.id}" >
+									<s:selectItems var="dist" value="#{loteCtrl.distribuicaoList}" label="#{dist.descricao}" 
+										noSelectionLabel="#{messages.selectMessage}" />
+									<s:convertEntity />
+								</h:selectOneMenu>
+						</s:decorate>
+		  	</h:panelGrid>
+	     	<h:panelGrid columns="1">
+	     		<s:decorate id="descricaoLoteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.descricao}</ui:define>
+					<h:inputText id="descricao" value="#{loteCtrl.lote.descricao}" maxlength="200" size="100" required="true" />
+				</s:decorate>
+				<s:decorate id="descricaoImpressaoField" template="layout/edit.xhtml" >
+					<ui:define name="label">#{messages.descricaoImpressao}</ui:define>
+					<h:inputTextarea name="descricaoImpressao"  value="#{loteCtrl.lote.descricaoImpressao}" cols="70" rows="10"  maxlength="10" required="true"/> 
+				</s:decorate>
+	     	</h:panelGrid>
+	     	<h:panelGrid columns="3">
+     			<s:decorate id="tipoValidadeField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.tipoValidade}</ui:define>						
+					<h:selectOneMenu id="tipoValidadeList" value="#{loteCtrl.lote.tipoValidade}" required="true" >						
+						<s:selectItems var="tipoValidade" value="#{loteCtrl.tipoValidadeList}" label="#{tipoValidade.label}"
+						 noSelectionLabel="#{messages.selectMessage}" />
+						<s:convertEnum />
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate id="identificacaoBilheteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.identificacaoBilhete}</ui:define>
+					<h:selectOneMenu id="identificacaoBilheteList" value="#{loteCtrl.lote.identificacaoBilhete}" required="true">
+						<s:selectItems var="identificacaoBilhete" value="#{loteCtrl.identificacaoBilheteList}" label="#{identificacaoBilhete.label}" 
+						noSelectionLabel="#{messages.selectMessage}"/>
+						<s:convertEnum />
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate id="tipoVendaField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.tipoVenda}</ui:define>
+					<h:selectOneMenu id="tipoVendaList" value="#{loteCtrl.lote.tipoVenda}">						
+						<s:selectItems var="tipoVenda" value="#{loteCtrl.tipoVendaList}" label="#{tipoVenda.descricao}"
+						 noSelectionLabel="#{messages.selectMessage}" />
+						 <s:convertEnum />
+					</h:selectOneMenu>					
+				</s:decorate>
+			</h:panelGrid>		
+			<h:panelGrid columns="3">				
+			 	<s:decorate id="statusField" template="layout/edit.xhtml" rendered="#{not empty loteCtrl.lote.id}">
+					<ui:define name="label">#{messages.status}</ui:define>
+					<h:selectOneMenu id="statusLoteList" value="#{loteCtrl.lote.status}" >						
+						<s:selectItems var="status" value="#{loteCtrl.statusLoteList}" label="#{status.label}"
+						 noSelectionLabel="#{messages.selectMessage}" />
+						 <s:convertEnum />
+					</h:selectOneMenu>					
+				</s:decorate>		
+														
+				<s:decorate id="quantidadeLoteField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.quantidadeBilhetesLotes}</ui:define>					
+					<h:inputText id="quantidadeLote" value="#{loteCtrl.lote.quantidade}" maxlength="10" size="10" required="true"/>					
+				</s:decorate>	
+			 	<s:decorate id="quantidadeDiasField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.quantidadeDiasValidade}</ui:define>
+					<h:inputText id="quantidadeDias" value="#{loteCtrl.lote.quantidadeDiasValidade}" maxlength="4" size="10" />
+				</s:decorate> 	
+			</h:panelGrid>	
+			<h:panelGrid columns="2">		
+				<s:decorate id="dataInicialField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataInicial}" />
+					</ui:define>
+					<rich:jQuery id="mskData1" selector=".txtDataInicial"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+					<rich:calendar
+						value="#{loteCtrl.lote.dataInicial}"
+						popup="#{true}" datePattern="dd/MM/yyyy" showWeeksBar="false"
+						firstWeekDay="0" enableManualInput="true"
+						inputClass="rich-textarea txtDataInicial" required="true">
+						<s:convertDateTime pattern="dd/MM/yyyy" />									
+					</rich:calendar>
+				</s:decorate>							
+				<s:decorate id="dataValidadeField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataValidade}" />
+					</ui:define>
+					<rich:jQuery id="mskData2" selector=".txtDataValidade"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+					<rich:calendar 
+						value="#{loteCtrl.lote.dataValidade}"
+						popup="#{true}" datePattern="dd/MM/yyyy" showWeeksBar="false"
+						firstWeekDay="0" enableManualInput="true"
+						inputClass="rich-textarea txtDataValidade" required="true">
+						<s:convertDateTime pattern="dd/MM/yyyy" />
+					</rich:calendar>
+				</s:decorate>	
+				<s:decorate id="dataInicialVendaField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataInicialVenda}" />
+					</ui:define>
+					<rich:jQuery id="mskData1" selector=".txtDataInicialVenda"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+					<rich:calendar 
+						value="#{loteCtrl.lote.dataInicialVenda}"
+						popup="#{true}" datePattern="dd/MM/yyyy" showWeeksBar="false"
+						firstWeekDay="0" enableManualInput="true"
+						inputClass="rich-textarea txtDataInicialVenda">
+						<s:convertDateTime pattern="dd/MM/yyyy" />
+					</rich:calendar>
+				</s:decorate>							
+				<s:decorate id="dataFinalVendaField" template="layout/edit.xhtml">
+					<ui:define name="label">
+						<h:outputText value="#{messages.dataFinalVenda}" />
+					</ui:define>
+					<rich:jQuery id="mskData2" selector=".txtDataFinalVenda"
+						timing="onload" query="mask('99/99/9999',{placeholder:' '})" />
+					<rich:calendar 
+						value="#{loteCtrl.lote.dataFinalVenda}"
+						popup="#{true}" datePattern="dd/MM/yyyy" showWeeksBar="false"
+						firstWeekDay="0" enableManualInput="true"
+						inputClass="rich-textarea txtDataFinalVenda">
+						<s:convertDateTime pattern="dd/MM/yyyy" />
+					</rich:calendar>
+				</s:decorate>				
+	     	</h:panelGrid>
+	     	<h:panelGrid columns="2">
+	     		<s:decorate id="provisorioField" template="layout/edit.xhtml">			
+					<ui:define name="label">#{messages.bilheteProvisorio}</ui:define>
+					<h:selectBooleanCheckbox value="#{loteCtrl.lote.provisorio}" label="#{messages.bilheteProvisorio}"/>					
+				</s:decorate>
+				<s:decorate id="preImpressoField" template="layout/edit.xhtml">			
+					<ui:define name="label">#{messages.bilhetePreImpresso}</ui:define>
+					<h:selectBooleanCheckbox value="#{loteCtrl.lote.preImpresso}" label="#{messages.bilhetePreImpresso}"/>					
+				</s:decorate>
+				<s:decorate id="retornoField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.retorno}</ui:define>
+					<h:selectBooleanCheckbox value="#{loteCtrl.lote.retorno}" label="#{messages.retorno}}" />
+				</s:decorate>	
+	 
+				<s:decorate id="inativoField" template="layout/edit.xhtml">
+					<ui:define name="label">#{messages.inativo}</ui:define>
+					<h:selectBooleanCheckbox value="#{loteCtrl.lote.inativo}" label="#{messages.inativo}" />
+				</s:decorate>
+	     	</h:panelGrid>
+			<div style="clear:both" />			
+			</rich:panel>
+			<div class="actionButtons">
+				<h:commandButton value="#{messages.actionSave}" action="#{loteCtrl.save}"/>
+				<s:button value="#{messages.actionBack}" action="#{loteCtrl.backList}" imediate="true"/>
+			</div>
+		</h:form>	
+	</ui:define>
+</ui:composition>
+

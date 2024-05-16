@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns="http://jboss.com/products/seam/components"
+	xmlns:transaction="http://jboss.com/products/seam/transaction"
+	xmlns:core="http://jboss.com/products/seam/core" xmlns:persistence="http://jboss.com/products/seam/persistence"
+	xmlns:drools="http://jboss.com/products/seam/drools" xmlns:bpm="http://jboss.com/products/seam/bpm"
+	xmlns:security="http://jboss.com/products/seam/security" xmlns:mail="http://jboss.com/products/seam/mail"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:async="http://jboss.com/products/seam/async"
+	xsi:schemaLocation="http://jboss.com/products/seam/core http://jboss.com/products/seam/core-2.2.xsd
+                 http://jboss.com/products/seam/persistence http://jboss.com/products/seam/persistence-2.2.xsd
+                 http://jboss.com/products/seam/drools http://jboss.com/products/seam/drools-2.2.xsd
+                 http://jboss.com/products/seam/bpm http://jboss.com/products/seam/bpm-2.2.xsd
+                 http://jboss.com/products/seam/security http://jboss.com/products/seam/security-2.2.xsd
+                 http://jboss.com/products/seam/mail http://jboss.com/products/seam/mail-2.2.xsd
+                 http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd
+                 http://jboss.com/products/seam/transaction http://jboss.com/products/seam/transaction-2.0.xsd
+                 http://jboss.com/products/seam/async http://jboss.com/products/seam/async-2.0.xsd">
+
+	<core:init debug="true" jndi-pattern="@jndiPattern@" />
+	<core:resource-loader>
+		<core:bundle-names>
+			<value>messages</value>
+			<value>applicationResources</value>
+		</core:bundle-names>
+	</core:resource-loader>
+
+	<component name="org.jboss.seam.debug.hotDeployFilter">
+		<property name="urlPattern">*.seam</property>
+	</component>
+
+	<component name="org.jboss.seam.transaction.facesTransactionEvents">
+		<property name="transactionFailedMessageEnabled">false</property>
+	</component>
+
+	<core:manager concurrent-request-timeout="500"
+		conversation-timeout="120000" conversation-id-parameter="cid"
+		parent-conversation-id-parameter="pid" />		
+	 	
+ 	<transaction:entity-transaction entity-manager="#{entityManager}"  /> 	
+
+	
+	<!-- Base MySql Local -->		
+		
+ 	<persistence:entity-manager-factory
+	name="entityManagerFactory" persistence-unit-name="baseMySql" />
+		
+	<persistence:managed-persistence-context
+	name="entityManager" auto-create="true" entity-manager-factory="#{entityManagerFactory}" /> 	
+	
+	<!-- XXXX -->	
+	
+	
+	<!-- Base MySql Externa -->		
+		
+ 	 <persistence:entity-manager-factory
+	name="entityManagerMySqlExternaFactory" persistence-unit-name="baseMySqlExterna" />
+		
+	<persistence:managed-persistence-context
+	name="entityManagerMySqlExterna" auto-create="true" entity-manager-factory="#{entityManagerMySqlExternaFactory}" /> 	
+	
+	<!-- XXXX -->		
+	
+	<!-- Base Oracle -->		
+	<persistence:entity-manager-factory
+		name="entityManagerOracleFactory" persistence-unit-name="baseOracle" />
+		
+		<persistence:managed-persistence-context
+		name="entityManagerOracle" auto-create="true" entity-manager-factory="#{entityManagerOracleFactory}" /> 
+		
+	<!-- XXXX -->
+	
+			
+
+	<event type="org.jboss.seam.security.notLoggedIn">
+		<action execute="#{redirect.captureCurrentView}" />
+	</event>
+
+	<event type="org.jboss.seam.security.loginSuccessful">
+		<action execute="#{redirect.returnToCapturedView}" />
+	</event>
+			
+    <!-- <mail:mail-session host="correio.beachpark.com.br" username="naoresponda@beachpark.com.br" password="123456" tls="false"/>  -->
+    <mail:mail-session host="mailer.beachpark.com.br" username="naoresponda@beachpark.com.br"/>
+   	<!--<mail:mail-session host="live.smtp.mailtrap.io" username="api" port="587" password="201f5e76f69774c00ac5e432e76e9e01" tls="true"/> --> 
+	<!-- <async:quartz-dispatcher /> --> 
+
+	<!-- For use with jBPM pageflow or process management -->
+	<!--
+		<bpm:jbpm> <bpm:process-definitions></bpm:process-definitions>
+		<bpm:pageflow-definitions></bpm:pageflow-definitions> </bpm:jbpm>
+	-->
+	
+ 	<component class="org.jboss.seam.web.MultipartFilter">
+		<property name="createTempFiles">true</property>
+		<property name="maxRequestSize">100000</property>
+	</component> 
+
+</components>

@@ -1,0 +1,75 @@
+.auto {
+	float: left;
+	clear: left;
+	width:auto;
+	font-weight: bold;
+	margin-top: 3px;
+	padding: 5px;
+	vertical-align: top;
+	width: 80px;
+}
+
+.bigauto {
+	float: left;
+	clear: left;
+	width:auto;
+	font-weight: bold;
+	margin-top: 3px;
+	padding: 5px;
+	vertical-align: top;
+	width: 170px;
+}
+
+.mediumauto {
+	float: left;
+	clear: left;
+	width:auto;
+	font-weight: bold;
+	margin-top: 3px;
+	padding: 5px;
+	vertical-align: top;
+	width: 110px;
+}
+.painel-resumo{
+		display: flex;
+		padding:0px;
+		margin:0;
+		flex-direction: row;
+		justify-content:flex-start;
+}
+
+.status-container{
+	display: flex;
+	margin:0;
+	padding-top:10px;
+	flex-direction: row;
+	justify-content:flex-start;
+}
+.status-container-item{
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:5px;
+	padding-top:5px;
+	display: flex;
+	flex-direction: column;
+	border-width: 1px;
+	border-style: solid;
+	border-color :rgb(190, 214, 248)
+}
+.status-container .status-description{
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color :rgb(190, 214, 248)
+}
+.status-container div{
+	padding-top : 5px;
+}
+.status-total-reservas{
+	font-size: 14px;
+	padding-left: 6px;
+}
+.status-description{
+	font-size: 13px;
+	font-weight: bold;
+}
+
